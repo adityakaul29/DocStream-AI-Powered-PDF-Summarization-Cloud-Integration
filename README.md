@@ -1,35 +1,68 @@
 # DocStream: AI-Powered PDF Summarization & Cloud Integration
 
-## Overview
-
-**DocStream** is a Python-based tool that automates the process of summarizing PDF documents and sharing them via Google Drive. This tool is ideal for anyone who regularly works with large PDF files and needs to generate concise summaries for quick review. The summarized documents are automatically uploaded to a designated folder in Google Drive, and a shareable link is generated for easy access.
+**DocStream** is an AI-powered web service that allows users to summarize PDF documents using a GET request. The service uses a pre-trained BART model from Hugging Face's `transformers` library to generate concise summaries. It also exposes the API to the internet via ngrok, enabling access from anywhere.
 
 ## Features
+- Summarize PDFs by sending a base64-encoded string through a GET request.
+- AI-powered text summarization using the **facebook/bart-large-cnn** model.
+- Exposes the Flask server publicly using **ngrok**.
 
-- **Automatic PDF Upload**: Upload your PDF file directly in Google Colab.
-- **AI-Powered Summarization**: Utilizes advanced NLP models to generate concise and accurate summaries of the uploaded PDF.
-- **Google Drive Integration**: Automatically uploads the summarized PDF to a specified folder ("DoShare") in your Google Drive.
-- **Shareable Link Generation**: Generates a shareable link for easy distribution of the summarized document.
+## Technologies Used
+- **Flask**: Python web framework for building the API.
+- **ngrok**: Tool to expose the Flask app to the public internet.
+- **Hugging Face Transformers**: Provides pre-trained NLP models for text summarization.
+- **PyMuPDF (fitz)**: Extracts text from PDF files.
 
-## How It Works
+## How it Works
 
-1. **File Upload**: Users upload a PDF file directly in Google Colab.
-2. **Text Extraction**: The content of the PDF is extracted using the `PyMuPDF` library.
-3. **Summarization**: The extracted text is summarized using the `facebook/bart-large-cnn` model from the `transformers` library.
-4. **Google Drive Upload**: The summarized PDF is automatically uploaded to a folder named "DoShare" in your Google Drive.
-5. **Link Generation**: A shareable link to the uploaded file is generated and printed in the Colab notebook.
+1. **Upload PDF**: The client sends a base64-encoded PDF string as a query parameter.
+2. **Extract Text**: The server decodes the PDF and extracts its text.
+3. **Summarize Text**: The extracted text is summarized using the `facebook/bart-large-cnn` model.
+4. **Response**: The summarized text is returned in the JSON response.
 
-## Setup and Installation
+## Installation and Setup
 
-### Prerequisites
+### Step 1: Clone the Repository
+``bash
+git clone https://github.com/yourusername/docstream.git
+cd docstream
 
-- Python 3.7 or higher
-- Google Colab environment
-- Google Drive account
+Step 2: Install the Required Dependencies
+Make sure you have Python installed, then install the necessary packages:
 
-### Installation
+pip install flask flask-ngrok transformers PyMuPDF
 
-Clone this repository to your local machine:
+Step 3: Run the Application
+Start the Flask app with ngrok:
+python app.py
 
-```bash
-git clone https://github.com/your-username/docstream.git
+
+Once the app is running, ngrok will provide you with a public URL (e.g., http://xyz123.ngrok.io). This URL can be used to interact with the API from anywhere.
+
+API Usage
+1. Endpoint: /summarize-pdf
+Method: GET
+URL: http://<ngrok-url>/summarize-pdf
+Query Parameter:
+pdf: The base64-encoded PDF file content.
+Example Request
+Use Postman or curl to make a request:
+
+curl "http://<ngrok-url>/summarize-pdf?pdf=BASE64_ENCODED_PDF"
+
+{
+  "summary": "This is the summarized content of your PDF..."
+}
+
+Testing with Postman
+Open Postman.
+Set the method to GET.
+Set the URL to the ngrok URL with /summarize-pdf.
+Add the pdf query parameter with the base64-encoded PDF string.
+Hit Send and receive the summarized text in the response.
+License
+This project is licensed under the MIT License.
+
+
+This is a complete **README** in markdown format that can be copied and pasted directly into your project. Let me know if you need any further assistance!
+
