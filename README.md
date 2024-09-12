@@ -57,12 +57,10 @@ curl "http://<ngrok-url>/summarize-pdf?pdf=BASE64_ENCODED_PDF"
 Testing with Postman
 Open Postman.
 Set the method to GET.
+
 Set the URL to the ngrok URL with /summarize-pdf.
+
 Add the pdf query parameter with the base64-encoded PDF string.
+
 Hit Send and receive the summarized text in the response.
-License
-This project is licensed under the MIT License.
-
-
-This is a complete **README** in markdown format that can be copied and pasted directly into your project. Let me know if you need any further assistance!
 
